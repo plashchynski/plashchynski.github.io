@@ -1,2 +1,32 @@
+body { background-color: #005f92; }
 #hcard-download { margin-bottom:1em; }
 #hcard-download a { background:url(images/hcard_download.png) 0 50% no-repeat; padding:.3em 0 0 35px; }
+
+#menu {
+    background-color: #00121b;
+    padding: 8px;
+    border-radius: 20px;
+}
+
+.button {
+    color: #9b9b9b;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.page {
+	padding-top:	35px;
+}
+
+.button:hover {
+    color: #d6d6d6;
+}
+
+div#menu {
+   position: absolute;
+   top: expression(5+((e=document.documentElement.scrollTop)?e:document.body.scrollTop)+'px');
+}
+
+body > div#menu{ position: fixed; }
+
+*:first-child+html #menu {top:0px !important;}
