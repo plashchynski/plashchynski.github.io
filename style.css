@@ -3,15 +3,17 @@ body { background-color: #005f92; }
 #hcard-download a { background:url(images/hcard_download.png) 0 50% no-repeat; padding:.3em 0 0 35px; }
 
 #menu {
-    background-color: #00121b;
-    padding: 8px;
-    border-radius: 20px;
+  background-color: #00121b;
+  padding: 8px;
+  border-radius: 20px;
+	opacity: 0.8;
 }
 
 .button {
-    color: #9b9b9b;
-    padding: 2px;
-    cursor: pointer;
+  color: #9b9b9b;
+  padding: 2px;
+  cursor: pointer;
+	text-decoration: none;
 }
 
 .page {
@@ -19,12 +21,12 @@ body { background-color: #005f92; }
 }
 
 .button:hover {
-    color: #d6d6d6;
+  color: #d6d6d6;
 }
 
 div#menu {
-   position: absolute;
-   top: expression(5+((e=document.documentElement.scrollTop)?e:document.body.scrollTop)+'px');
+  position: absolute;
+  top: expression(5+((e=document.documentElement.scrollTop)?e:document.body.scrollTop)+'px');
 }
 
 body > div#menu{ position: fixed; }
