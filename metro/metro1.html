@@ -51,71 +51,128 @@
       }
     </style>
     <script type="text/javascript">
+      function pause(millis) 
+      {
+        var date = new Date();
+        var curDate = null;
+
+        do { curDate = new Date(); } 
+        while(curDate-date < millis)
+      }
+
       function OneWayOneTrainLine(line_obj) {
         this.line     = line_obj;
         this.nodes    = this.line.children();
-        this.reverse  = false;
       }
 
-      OneWayOneTrainLine.prototype.set_train = function() {
-        this.nodes.first().addClass('train');
+      OneWayOneTrainLine.prototype = {
+        set_train: function(train) {
+          this.nodes.first().addClass('train');
+          train.line = this
+          this.train = train
+        },
+
+        current_position: function() {
+          return this.line.find('.train')
+        },
+
+        move_forward: function() {
+          this.current_position().removeClass('train').next('div').addClass('train');
+        },
+
+        move_back: function() {
+          this.current_position().removeClass('train').prev('div').addClass('train');
+        },
+
+        red_semaphore: function() {
+          return !((this.train.reverse) ? this.current_position().prev('div') : this.current_position().next('div')).length
+        },
+
+        segment: function() {
+          return this.current_position().hasClass('segment')
+        },
+
+        station: function() {
+          return this.current_position().hasClass('station')
+        }
       }
 
-      OneWayOneTrainLine.prototype.current_position = function() {
-        return this.line.find('.train')
+      function Train() {
+        this.run = false;
+        this.reverse = false;
       }
 
-      OneWayOneTrainLine.prototype.move_forward = function() {
-        this.current_position().removeClass('train').next('div').addClass('train');
+      Train.prototype = {
+        test: function() { // on all signal lamps
+          this.change_direction();
+          this.door_signal_on();
+          this.stop_signal_on();
+        },
+
+        start: function() {
+          this.change_direction();
+          this.door_signal_off();
+          this.stop_signal_off();
+          this.run = true;
+        },
+
+        change_direction: function() {
+          this.reverse = !this.reverse;
+          (this.reverse) ? $('.dashboard').find('.reverse').addClass('warn') : $('.dashboard').find('.reverse').removeClass('warn');
+        },
+
+        door_signal_on: function() {
+          $('.dashboard').find('.door').addClass('error');
+        },
+
+        door_signal_off: function() {
+          $('.dashboard').find('.door').removeClass('error');
+        },
+
+        stop_signal_on: function() {
+          $('.dashboard').find('.stop').addClass('error');
+        },
+
+        stop_signal_off: function() {
+          $('.dashboard').find('.stop').removeClass('error');
+        },
+
+        update_status: function() {
+          if (this.line.red_semaphore())
+            this.change_direction();
+
+          (this.reverse) ? this.line.move_back() : this.line.move_forward();
+
+          if (this.line.segment()) {
+            this.door_signal_off();
+            this.stop_signal_off();
+            return 100;
+          } else {
+            this.stop_signal_on();
+            this.door_signal_on();
+            return (400 + Math.floor(Math.random() * 1000));
+          }
+        },
       }
 
-      OneWayOneTrainLine.prototype.move_back = function() {
-        this.current_position().removeClass('train').prev('div').addClass('train');
-      }
 
-      OneWayOneTrainLine.prototype.line_end = function() {
-        return !((this.reverse) ? this.current_position().prev('div') : this.current_position().next('div')).length
-      }
-
-      OneWayOneTrainLine.prototype.segment = function() {
-        return this.current_position().hasClass('segment')
-      }
-
-      OneWayOneTrainLine.prototype.station = function() {
-        return this.current_position().hasClass('station')
-      }
 
       $(document).ready(function() {
-        window.line1 = new OneWayOneTrainLine($('.line:first'));
-        line1.set_train();
+        window.line1  = new OneWayOneTrainLine($('.line:first'));
+        window.train1 = new Train();
+        line1.set_train(train1);
 
-        train_go_cycle();
+        train1.test();
+        setTimeout('train_start()', 3000);
       });
-
-      function train_go_cycle() {
-        var timeout = train_go(line1);
-        setTimeout('train_go_cycle()', timeout);
+      
+      function train_start() {
+        go_cycle();
       }
 
-      function train_go(line) {
-        if (line.line_end())
-          line.reverse = !line.reverse;
-
-        if (line.reverse) {
-          $('.dashboard').find('.reverse').addClass('warn');
-          line.move_back();
-        } else {
-          $('.dashboard').find('.reverse').removeClass('warn');
-          line.move_forward();
-        }
-
-        if (line.segment()) {
-          $('.dashboard').find('.stop').removeClass('error');
-          return 100;
-        } else {
-          $('.dashboard').find('.stop').addClass('error');
-          return (400 + Math.floor(Math.random() * 1000));
-        }
+      function go_cycle() {
+        var timeout = train1.update_status();
+        setTimeout('go_cycle()', timeout);
       }
     </script>
   </head>
@@ -157,6 +214,7 @@
     <div class='dashboard'>
       <div class='reverse indicator'>Reverse</div>
       <div class='stop indicator'>Stop</div>
+      <div class='door indicator'>Door</div>
     </div>
   </body>
 </html>
