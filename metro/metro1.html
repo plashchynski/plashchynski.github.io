@@ -1,0 +1,162 @@
+<html>
+  <head>
+    <title>Metro</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <style type="text/css">
+      .dashboard {
+        background-color: gray;
+        border: 2px outset black;
+        margin: 50px 20px;
+        float: left;
+      }
+
+      .indicator {
+        background-color: black;
+        border: 3px outset black;
+        padding: 3px;
+        float: left;
+      }
+
+      .warn {
+        background-color: yellow;
+        color: black;
+      }
+
+      .error {
+        background-color: red;
+        color: white;
+      }
+
+      .clear {
+        clear: left;
+      }
+
+      .segment {
+        background-color: yellow;
+        border: 2px solid blue;
+        float: left;
+        margin: 8px 1px;
+        padding: 4px 10px;
+      }
+      .station {
+        margin: 3px;
+        padding: 10px;
+        background-color: yellow;
+        border: 2px solid black;
+        float: left;
+        border-radius: 10px;
+      }
+      .train {
+        background-color: red;
+      }
+    </style>
+    <script type="text/javascript">
+      function OneWayOneTrainLine(line_obj) {
+        this.line     = line_obj;
+        this.nodes    = this.line.children();
+        this.reverse  = false;
+      }
+
+      OneWayOneTrainLine.prototype.set_train = function() {
+        this.nodes.first().addClass('train');
+      }
+
+      OneWayOneTrainLine.prototype.current_position = function() {
+        return this.line.find('.train')
+      }
+
+      OneWayOneTrainLine.prototype.move_forward = function() {
+        this.current_position().removeClass('train').next('div').addClass('train');
+      }
+
+      OneWayOneTrainLine.prototype.move_back = function() {
+        this.current_position().removeClass('train').prev('div').addClass('train');
+      }
+
+      OneWayOneTrainLine.prototype.line_end = function() {
+        return !((this.reverse) ? this.current_position().prev('div') : this.current_position().next('div')).length
+      }
+
+      OneWayOneTrainLine.prototype.segment = function() {
+        return this.current_position().hasClass('segment')
+      }
+
+      OneWayOneTrainLine.prototype.station = function() {
+        return this.current_position().hasClass('station')
+      }
+
+      $(document).ready(function() {
+        window.line1 = new OneWayOneTrainLine($('.line:first'));
+        line1.set_train();
+
+        train_go_cycle();
+      });
+
+      function train_go_cycle() {
+        var timeout = train_go(line1);
+        setTimeout('train_go_cycle()', timeout);
+      }
+
+      function train_go(line) {
+        if (line.line_end())
+          line.reverse = !line.reverse;
+
+        if (line.reverse) {
+          $('.dashboard').find('.reverse').addClass('warn');
+          line.move_back();
+        } else {
+          $('.dashboard').find('.reverse').removeClass('warn');
+          line.move_forward();
+        }
+
+        if (line.segment()) {
+          $('.dashboard').find('.stop').removeClass('error');
+          return 100;
+        } else {
+          $('.dashboard').find('.stop').addClass('error');
+          return (400 + Math.floor(Math.random() * 1000));
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Simple one way one train line</h1> <div class='line'>
+      <div class='segment'></div>
+      <div class='station'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='station'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='station'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='station'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='segment'></div>
+      <div class='station'></div>
+      <div class='segment'></div>
+    </div>
+
+    <div class='clear'></div>
+
+    <div class='dashboard'>
+      <div class='reverse indicator'>Reverse</div>
+      <div class='stop indicator'>Stop</div>
+    </div>
+  </body>
+</html>
