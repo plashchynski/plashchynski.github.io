@@ -4,8 +4,11 @@
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
     <title>Deposit Calculator</title>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.1.min.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+    <script src="https://www.google.com/jsapi?key=ABQIAAAAkazS2OpN70z3z06RUSEeKhQQNLuGGkiHDgfdLxYLNyOCq-j0fRRT_kktDmQ646dAONr3J0XeJIZbdQ" type="text/javascript"></script>
     <script type="text/javascript">
+      google.load('jquery', '1.6.3');
+      google.load("visualization", "1", {packages:["corechart"]});
+
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-17497138-1']);
       _gaq.push(['_trackPageview']);
@@ -15,18 +18,46 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+    </script>
+
+    <script type="text/javascript">
+      function round(num) {
+        return Math.round(num * 100) / 100;
+      }
 
       $(function() {
-        $('#initial_amount').focus();
+        $('#principal_amount').focus();
 
         $('#calc_form').submit(function(){
           var principal_amount = parseFloat($('#principal_amount').attr('value'));
           var rate = parseFloat($('#rate').attr('value'));
-          var months = parseFloat($('#months').attr('value'));
-          var total_interest = principal_amount / 100 * rate / 12 * months;
+          var months = parseInt($('#months').attr('value'));
+          var capitalisation = $('#capitalisation').attr('checked');
+          var total_interest = 0;
+          var chart_data = new google.visualization.DataTable();
 
-          $('#total_interest').text(total_interest);
-          $('#maturity_value').text(total_interest + principal_amount);
+          chart_data.addColumn('string', 'Month');
+          chart_data.addColumn('number', 'Total');
+
+          for (var i = 1; i <= months; i++) {
+            if (capitalisation) {
+              month_interest = (principal_amount + total_interest) * rate / 12 / 100;
+              total_interest += month_interest;
+              chart_data.addRow([i.toString(), round(principal_amount + total_interest)]);
+            }
+            else {
+              month_interest = principal_amount * rate / 12 / 100;
+              total_interest += month_interest;
+              chart_data.addRow([i.toString(), round(principal_amount + total_interest)]);
+            }
+          }
+
+          $('#total_interest').text(round(total_interest));
+          $('#maturity_value').text(round(total_interest + principal_amount));
+
+          var chart = new google.visualization.LineChart(document.getElementById('chart'));
+          chart.draw(chart_data, {width: 400, height: 240, title: 'Maturity value per month'});
+
           $('#results').show();
 
           return false;
@@ -53,19 +84,23 @@
             <label for='months'>Months</label>
             <input type='text' required autocomplete='off' name='months' id='months'>
           </div>
+
+          <div class='clearfix'>
+            <label for='capitalisation'>Capitalisation</label>
+            <input type='checkbox' name='capitalisation' id='capitalisation'>
+          </div>
+
           <br>
           <div class='clearfix'>
-            <button class='btn primary' type='submit'>Calc</button>
+            <button class='btn primary' type='submit'>Calculate</button>
           </div>
         </fieldset>
       </form>
 
-
       <div id='results' class='well' style='display:none;'>
+        <div id='chart'></div>
         Total interest: <span id='total_interest'></span><br>
         Maturity value: <span id='maturity_value'></span><br>
-        <div id='per_month'>
-        </div>
       </div>
     </div>
   </body>
