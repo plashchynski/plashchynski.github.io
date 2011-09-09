@@ -86,8 +86,9 @@
           </div>
 
           <div class='clearfix'>
-            <label for='capitalisation'>Capitalisation</label>
-            <input type='checkbox' name='capitalisation' id='capitalisation'>
+            <label for='capitalisation'>
+              <input type='checkbox' name='capitalisation' id='capitalisation'> <span>Capitalisation</span>
+            </label>
           </div>
 
           <br>
@@ -97,7 +98,7 @@
         </fieldset>
       </form>
 
-      <div id='results' class='well' style='display:none;'>
+      <div id='results' class='alert-message block-message success' style='display:none;'>
         <b>Total interest:</b> <span id='total_interest'></span><br>
         <b>Maturity value:</b> <span id='maturity_value'></span><br>
         <div id='chart'></div>
