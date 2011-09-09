@@ -56,7 +56,7 @@
           $('#maturity_value').text(round(total_interest + principal_amount));
 
           var chart = new google.visualization.LineChart(document.getElementById('chart'));
-          chart.draw(chart_data, {width: 400, height: 240, title: 'Maturity value per month'});
+          chart.draw(chart_data, {width: 400, height: 240, title: 'Maturity value per month', hAxis: {title: 'Month'}});
 
           $('#results').show();
 
@@ -98,9 +98,9 @@
       </form>
 
       <div id='results' class='well' style='display:none;'>
+        <b>Total interest:</b> <span id='total_interest'></span><br>
+        <b>Maturity value:</b> <span id='maturity_value'></span><br>
         <div id='chart'></div>
-        Total interest: <span id='total_interest'></span><br>
-        Maturity value: <span id='maturity_value'></span><br>
       </div>
     </div>
   </body>
