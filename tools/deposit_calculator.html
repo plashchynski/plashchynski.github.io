@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <title>Deposit Calculator</title>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.1.1.min.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-17497138-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+      $(function() {
+        $('#initial_amount').focus();
+
+        $('#calc_form').submit(function(){
+          var principal_amount = parseFloat($('#principal_amount').attr('value'));
+          var rate = parseFloat($('#rate').attr('value'));
+          var months = parseFloat($('#months').attr('value'));
+          var total_interest = principal_amount / 100 * rate / 12 * months;
+
+          $('#total_interest').text(total_interest);
+          $('#maturity_value').text(total_interest + principal_amount);
+          $('#results').show();
+
+          return false;
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div class='container'>
+      <h1>Deposit calculator</h1>
+      <form class='form-stacked' id='calc_form'>
+        <fieldset>
+          <div class='clearfix'>
+            <label for='principal_amount'>Principal amount</label>
+            <input type='text' required autocomplete='off' name='principal_amount' id='principal_amount'>
+          </div>
+
+          <div class='clearfix'>
+            <label for='rate'>Interest rate</label>
+            <input type='text' required autocomplete='off' max='100' name='rate' id='rate'> %
+          </div>
+
+          <div class='clearfix'>
+            <label for='months'>Months</label>
+            <input type='text' required autocomplete='off' name='months' id='months'>
+          </div>
+          <br>
+          <div class='clearfix'>
+            <button class='btn primary' type='submit'>Calc</button>
+          </div>
+        </fieldset>
+      </form>
+
+      <div id='results' class='well' style='display:none;'>
+        Total interest: <span id='total_interest'></span><br>
+        Maturity value: <span id='maturity_value'></span><br>
+        <div id='per_month'>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
