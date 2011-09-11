@@ -26,8 +26,6 @@
       }
 
       $(function() {
-        $('#principal_amount').focus();
-
         $('#calc_form').submit(function(){
           var principal_amount = parseFloat($('#principal_amount').attr('value'));
           var rate = parseFloat($('#rate').attr('value'));
@@ -72,7 +70,7 @@
         <fieldset>
           <div class='clearfix'>
             <label for='principal_amount'>Principal amount</label>
-            <input type='text' required autocomplete='off' name='principal_amount' id='principal_amount'>
+            <input type='text' required autofocus autocomplete='off' name='principal_amount' id='principal_amount'>
           </div>
 
           <div class='clearfix'>
