@@ -1,0 +1,14 @@
+{
+  "name": "Deposit calculator",
+  "description": "calculate your deposit interests",
+  "version": "2",
+  "icons": { "128": "128.png" },
+  "app": {
+    "urls": [
+      "http://plashchynski.github.com/tools/deposit_calculator/"
+    ],
+    "launch": {
+      "web_url": "http://plashchynski.github.com/tools/deposit_calculator/"
+    }
+  }
+}
