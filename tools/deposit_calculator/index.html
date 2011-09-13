@@ -8,6 +8,11 @@
     <script src="https://www.google.com/jsapi?key=ABQIAAAAkazS2OpN70z3z06RUSEeKhQQNLuGGkiHDgfdLxYLNyOCq-j0fRRT_kktDmQ646dAONr3J0XeJIZbdQ" type="text/javascript"></script>
     <script src='js/modernizr.min.js'></script>
     <script type="text/javascript">
+      if (navigator.language == 'ru')
+      {
+        window.location = 'index.ru.html';
+      }
+
       google.load('jquery', '1.6.3');
       google.load("visualization", "1", {packages:["corechart"]});
 
