@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html manifest="deposit_calculator.appcache">
+  <head>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <title>Deposit Calculator</title>
+    <link rel="shortcut icon" href='favicon.ico' />
+    <link rel="stylesheet" href="css/bootstrap-1.1.1.min.css">
+    <script src="js/jquery-1.6.4.min.js"></script>
+    <script src='js/modernizr.min.js'></script>
+    <script src='js/highcharts.js'></script>
+
+    <script type="text/javascript">
+      function round(num) {
+        return Math.round(num * 100) / 100;
+      }
+
+      $(function() {
+        if (!Modernizr.input.autofocus)
+          $('#principal_amount').focus();
+
+        $('#calc_form').submit(function(){
+          var principal_amount = parseFloat($('#principal_amount').attr('value'));
+          var rate = parseFloat($('#rate').attr('value'));
+          var months = parseInt($('#months').attr('value'));
+          var capitalisation = $('#capitalisation').attr('checked');
+          var total_interest = 0;
+          var chart_data = {
+             chart: {
+                renderTo: 'chart',
+                width: 350,
+                height: 250
+             },
+             credits: {
+                 enabled: false
+             },
+             legend: {
+                 enabled: false
+             },
+             title: {
+              text: 'Maturity value per month',
+             },
+             xAxis: {
+              title: {
+                text: 'Month'
+              },
+              min: 1,
+              startOnTick: true,
+              endOnTick: true
+             },
+             yAxis: {
+              title: {
+                text: 'Value'
+              },
+              min: principal_amount
+             },
+             tooltip: {
+               formatter: function() {
+                  return 'Month '+ this.x +': '+ this.y;
+               }
+             },
+             series: [{
+                data: []
+             }]
+          }
+
+          for (var i = 1; i <= months; i++) {
+            if (capitalisation) {
+              month_interest = (principal_amount + total_interest) * rate / 12 / 100;
+              total_interest += month_interest;
+              chart_data.series[0].data.push([i, round(principal_amount + total_interest)]);
+            }
+            else {
+              month_interest = principal_amount * rate / 12 / 100;
+              total_interest += month_interest;
+              chart_data.series[0].data.push([i, round(principal_amount + total_interest)]);
+            }
+          }
+
+          $('#total_interest').text(round(total_interest));
+          $('#maturity_value').text(round(total_interest + principal_amount));
+
+          var chart = new Highcharts.Chart(chart_data);
+
+          $('#results').show();
+
+          return false;
+        })
+      })
+    </script>
+    <style type='text/css'>
+      label.checkbox {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class='container'>
+      <h1>Deposit calculator</h1>
+      <noscript><div class='alert-message error'>You must have Javascript enabled to use .</div></noscript>
+      <form class='form-stacked' id='calc_form' action="#">
+        <fieldset>
+          <div class='clearfix'>
+            <label for='principal_amount'>Principal amount</label>
+            <input type='text' required autofocus autocomplete='off' name='principal_amount' id='principal_amount'>
+          </div>
+
+          <div class='clearfix'>
+            <label for='rate'>Interest rate</label>
+            <input type='text' required autocomplete='off' name='rate' id='rate'> %
+          </div>
+
+          <div class='clearfix'>
+            <label for='months'>Months</label>
+            <input type='text' required autocomplete='off' name='months' id='months'>
+          </div>
+
+          <div class='clearfix'>
+            <label for='capitalisation' class='checkbox'>
+              <input type='checkbox' name='capitalisation' id='capitalisation'> <span>Capitalisation</span>
+            </label>
+          </div>
+
+          <br>
+          <div class='clearfix'>
+            <button class='btn primary' type='submit'>Calculate</button>
+          </div>
+        </fieldset>
+      </form>
+
+      <div id='results' class='alert-message block-message success' style='display:none;'>
+        <b>Total interest:</b> <span id='total_interest'></span><br>
+        <b>Maturity value:</b> <span id='maturity_value'></span><br>
+        <div id='chart'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-17497138-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </body>
+</html>

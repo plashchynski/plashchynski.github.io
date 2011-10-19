@@ -1,0 +1,15 @@
+{
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "6",
+  "icons": { "128": "128.png" },
+  "app": {
+    "urls": [
+      "http://plashchynski.github.com/deposit_calculator/"
+    ],
+    "launch": {
+      "web_url": "http://plashchynski.github.com/deposit_calculator/"
+    }
+  }
+}
