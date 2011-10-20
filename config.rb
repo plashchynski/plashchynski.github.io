@@ -48,6 +48,8 @@
 #   @which_fake_page = "Rendering a fake page with a variable"
 # end
 
+page "/index.html"
+
 ###
 # Helpers
 ###
@@ -73,10 +75,10 @@ set :build_dir, '.'
 # Build-specific configuration
 configure :build do
   # For example, change the Compass output style for deployment
-  # activate :minify_css
-  
+  activate :minify_css
+
   # Minify Javascript on build
-  # activate :minify_javascript
+  activate :minify_javascript
   
   # Enable cache buster
   # activate :cache_buster
