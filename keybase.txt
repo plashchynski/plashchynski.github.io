@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/plashchynski
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://plashchynski.github.io
+  * I am plashchynski (https://keybase.io/plashchynski) on keybase.
+  * I have a public key with fingerprint 4419 EECA 7D19 B3B0 28C9  909E CB2C 2D65 75A8 B69F
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01014582776a621fb1983955fe2504c8e208a8fe1f9ace632db2e67bb1f54aa6ce780a",
+            "fingerprint": "4419eeca7d19b3b028c9909ecb2c2d6575a8b69f",
+            "host": "keybase.io",
+            "key_id": "cb2c2d6575a8b69f",
+            "kid": "01014582776a621fb1983955fe2504c8e208a8fe1f9ace632db2e67bb1f54aa6ce780a",
+            "uid": "6223284aa0d6c74b4bcfeb3098a3b400",
+            "username": "plashchynski"
+        },
+        "service": {
+            "hostname": "plashchynski.github.io",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1477425454,
+    "expire_in": 157680000,
+    "prev": "3ec8b1f7bd627fd9012f6b617d68a9e229b22be3183559ff2afcfc577b524630",
+    "seqno": 7,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.58
+Comment: https://keybase.io/crypto
+
+yMIwAnicrVJbSBRRGN6tTNJuW1BBkTSBl1pt5sx9oXrpJhQGRkUU6zlnzuxOazPr
+zOzWopFFl4egRKKLYqUQBFroPkQWXZSQyOwlkCK7kA+WEoGUlql1xuqtx87L4Zz/
++77/+37+R3Om+7L8R59JnxbcTb/3d3dcS/h2z2svqmSQpaWYUCUTI1MXKdeI44Zj
+hsaEGJZjOUFUgCxLUAKcjjhV4VVR1AkQWQErBLAKVHTC6SrEROKBhgCRZIQ4XRQg
+lDCRFRYyQUY3zAix47ZhulRWEDiVEAxljVMRj1igYFVlVYIRwECTRFmECpJUnRKj
+luMxqDkEHVJkWPSPPsJT9v6B/8++E1NyEgA8UGiB1SQsC0hAWCeIZ1UF8khgWQ/o
+ENuEBwhFx8uhE8XRlOnEDOZwkKGVpIGJN1wvzT9QRRHDjSbQ73Rx23ItbJVTTNR1
+407I03BTcY90kKDwH7kwMkyNTpUyksR2DMtkQhxFYtfw9DlBlgUgCqIQZMihuGGT
+sOEhRFlSWHq8PiRJJXmCFRpbRpoEZF1TWQ7oEpI4WZMUqBIAVAQAIjyn8KKo6jqA
+OtaxKMtIBILEe9kdUmFaTEimNmGESjpGxIRuwibM4c6He2f4/Fm+mRnTvG3zZc2a
+/3cHZ8zN/HlgTy9TEugULo1ljgTam6pyc9+daX3+4GbhKn1l3YLskw1vvvWvdfb5
+2Asrqms3DOx/1dTaXLesv7VjJ4iRvrrVeatqa9ZlBAp6U9lXXgbe3z4IC7eWDUSv
+Xx4Zrp29oyxv/Pip9g3nPlzdUvH4/Mb67KEdA/kfc1pSkc7SxpLBG+vP3rmV/Lxk
+1E7kuH0Fb+01K62nP4Lbfdvufe+5eOzO9od7Hu+sera8K5K+94RtqZmdcT85q6Sg
+rPjl3s/5k0OTu1YvdNPNI2O4vqSha2LixeaF9Q29i3ryAsW7x7s3nc6saGMbJ/qv
+js7vW7r4dnSw53W6NL+67cj34ZMdX9uap/trvpz4BaYeTNE=
+=Y5Oh
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/plashchynski
+
+==================================================================
